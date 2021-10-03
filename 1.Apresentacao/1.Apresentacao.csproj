@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>_1.Apresentacao</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
+    <PackageReference Include="Serilog" Version="2.10.0"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3.Dominio\3.Dominio.csproj"/>
+    <ProjectReference Include="..\4.Repositorio\4.Repositorio.csproj"/>
+    <ProjectReference Include="..\2.Aplicacao\2.Aplicacao.csproj"/>
+  </ItemGroup>
+</Project>
