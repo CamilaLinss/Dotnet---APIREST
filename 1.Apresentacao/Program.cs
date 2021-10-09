@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 
@@ -18,23 +14,40 @@ namespace _1.Apresentacao
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-               // .ConfigureAppConfiguration((hostingContext, config) =>
-               // {
-                     
-                    //var settings = config.Build();
-                   // Serilog.Log.Logger = new LoggerConfiguration()
-                        // .MinimumLevel.Debug()
-                        // .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
-                        // .MinimumLevel.Override("System", LogEventLevel.Error)
-                         //.MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-                        // .CreateLogger();
-                //})
-               // .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder =>
+        public static IWebHostBuilder CreateHostBuilder(string[] args){
+
+            return WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseSerilog((builderContext, config ) =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                   config.MinimumLevel.Debug()
+                         .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+                         .MinimumLevel.Override("System", LogEventLevel.Error)
+                         .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+                         .Enrich.FromLogContext()
+                         .Enrich.WithProperty("System", "API - Cadastro de Clientes ")
+                         .WriteTo
+                         .Console(
+                                  outputTemplate: "{{" +
+                                                  " System: {System}," +
+                                                  " Timestamp:{Timestamp:HH:mm:ss}," +
+                                                  " TraceId: {TraceId}," +
+                                                  " SpanId: {SpanId}," +
+                                                  " RequestId: {RequestId}," +
+                                                  " CorrelationId: {CorrelationId}," +
+                                                  " Level: {Level}," +
+                                                  " Context: {SourceContext}," +
+                                                  " Exception: {Exception}," +
+                                                  " Message: {Message:lj}," +
+                                                  " Enviroment: {Enviroment}," +
+                                                  "" +
+                                                  "}," +
+                                                  "{NewLine}"
+                                 );
+
+                AppDomain.CurrentDomain.ProcessExit += (s, e) => Log.CloseAndFlush();
+
                 });
+        }
     }
 }

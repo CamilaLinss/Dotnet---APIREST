@@ -21,26 +21,18 @@ namespace _3.Dominio.Entidades.Validations.Services
 
         public ValidationResult cadastra(Cliente cliente){
 
-            //Valida o corpo novo que entrou, como estou usando uma abstract class na entidade cliente, então fica assim "cliente.Validate"
-            //Validação inicial das rules -se ja tiver erros iniciais, os mesmos já vão ser retornados
             cliente.validationResult = cliente.Validate(cliente);
 
             if(!cliente.validationResult.IsValid){return cliente.validationResult;}
 
 
-            //Regras de negocio
-
-            //Trago todos os registros, buscando se entre eles ja existe esse email cadastrado
+            //Regras de negocio - Nenhum cliente pode ter e-mail igual
             IEnumerable<Cliente> emails = _repo.busca().Where(e => e.email == cliente.email);
-            //Valido e adiciono
-            if(emails.Any()){
-                
-                //Metodo addError criado na classe abstract entity (com ela tb ja fazemos o DTO das falhas, aparecendo apenas alguns campos)
-                cliente.AddError("Cliente", "Esse e-mail já está cadastrado. Recupere a sua senha");
 
+            if(emails.Any()){
+                cliente.AddError("Cliente", "Esse e-mail já está cadastrado. Recupere a sua senha");
                 return cliente.validationResult;
             }
-
 
             _repo.cadastra(cliente);
 
@@ -48,12 +40,12 @@ namespace _3.Dominio.Entidades.Validations.Services
 
         }
 
+
         public IEnumerable<Cliente> busca(){
 
             var result = _repo.busca();
             
             return result;
-
         }
 
         public Cliente buscaId(int id){
@@ -67,17 +59,16 @@ namespace _3.Dominio.Entidades.Validations.Services
 
             _repo.atualiza(id, clienteUpdate);
 
-                return true;
+            return true;
 
         }
 
 
         public bool delete(int id){
 
-            //Busca id passado no endpoint pra ver se o registro existe
             var clienteexiste = _repo.buscaId(id);
 
-              if(clienteexiste == null){
+            if(clienteexiste == null){
 
                 return false;
 
@@ -85,7 +76,7 @@ namespace _3.Dominio.Entidades.Validations.Services
 
             _repo.deletar(id);
 
-            return true;
+                return true;
 
         }
 

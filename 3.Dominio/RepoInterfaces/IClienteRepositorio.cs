@@ -6,15 +6,15 @@ namespace Dominio.RepoInterfaces
     public interface IClienteRepositorio
     {
          
-         void cadastra(Cliente cliente);
+            void cadastra(Cliente cliente);
 
-         IEnumerable<Cliente> busca();
+            IEnumerable<Cliente> busca();
 
-         Cliente buscaId(int id);
+            Cliente buscaId(int id);
 
-        void atualiza(int id, Cliente clienteAtualizado);
+            void atualiza(int id, Cliente clienteAtualizado);
 
-        void deletar(int id);
+            void deletar(int id);
 
     }
 }

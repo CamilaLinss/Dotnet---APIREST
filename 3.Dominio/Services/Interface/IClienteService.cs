@@ -8,15 +8,15 @@ namespace Dominio.Services.Interface
     public interface IClienteService
     {
          
-        ValidationResult cadastra(Cliente cliente);
+            ValidationResult cadastra(Cliente cliente);
 
-        IEnumerable<Cliente> busca();
+            IEnumerable<Cliente> busca();
 
-         Cliente buscaId(int id);
+            Cliente buscaId(int id);
 
-        bool atualiza (int id, Cliente clienteUpdate);
+            bool atualiza (int id, Cliente clienteUpdate);
 
-        bool delete(int id);
+            bool delete(int id);
 
     }
 }

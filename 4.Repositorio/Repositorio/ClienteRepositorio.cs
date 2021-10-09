@@ -17,7 +17,7 @@ namespace Repositorio.Repositorio
         }
 
 
-        //cadastra
+
         public void cadastra(Cliente cliente){
 
             _context.Clientes.Add(cliente);
@@ -27,17 +27,14 @@ namespace Repositorio.Repositorio
         }
 
 
-        //busca tudo
         public IEnumerable<Cliente> busca(){
 
-            //Para utilizar ienumerable não uso o fynd async mas apenas chamando a entidade ja trago os resultados
            var result = _context.Clientes;
 
             return result;
         }
 
 
-        //busca por id
         public Cliente buscaId(int id){
 
             Cliente result = _context.Clientes.Find(id);
@@ -46,11 +43,8 @@ namespace Repositorio.Repositorio
 
         }
 
-
-        //Atualizar
         public void atualiza(int id, Cliente clienteAtualizado){
 
-            //_context.Clientes.Update(clienteAtualizado);
             Cliente cliente = _context.Clientes.First(c => c.id == id);
 
             cliente.CPF = clienteAtualizado.CPF;
@@ -71,10 +65,6 @@ namespace Repositorio.Repositorio
             _context.SaveChanges();
 
         }
-
-
-
-
 
         
     }
