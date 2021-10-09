@@ -54,7 +54,7 @@ namespace Apresentacao.Controllers
         /// <response code="500">Se ocorrer um erro inesperado</response>
 
         [HttpPost("cadastra")]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)] //Mapeio de forma automatica todos os status que podem retornar, sem precisar ficar tratando com if
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult cadastra([FromBody] DTOInputCliente clienteDTO){
