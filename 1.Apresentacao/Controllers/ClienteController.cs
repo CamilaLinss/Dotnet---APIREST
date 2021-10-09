@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _3.Dominio.Entidades.Validations;
+using _5._1.Logger;
 using Aplicacao.DTO;
 using Aplicacao.DTO.Output;
 using AutoMapper;
@@ -7,6 +8,7 @@ using Dominio.Entidades;
 using Dominio.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace Apresentacao.Controllers
 {
@@ -19,6 +21,7 @@ namespace Apresentacao.Controllers
     {
 
       private readonly IClienteService _service;
+      //private readonly ILogger _logger;
      
       //Injeta o mapper
       private readonly IMapper _mapper;
@@ -26,10 +29,11 @@ namespace Apresentacao.Controllers
       Validations validacao = new Validations();
 
 
-      public ClienteController(IClienteService service, IMapper mapper)
+      public ClienteController(IClienteService service, IMapper mapper)//, ILogger logger)
       {
           _service = service;
           _mapper =mapper;
+          //_logger = logger;
       }
 
 
@@ -41,6 +45,7 @@ namespace Apresentacao.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult cadastra([FromBody] DTOInputCliente clienteDTO){
 
+           //_logger.Information("Iniciando cadastro Cliente");
 
             //Mas meu service espera um Cliente e não DTOCreatedCliente - devemos converter
             //como ? Primeira opção manual
